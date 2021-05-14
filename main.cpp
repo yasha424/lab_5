@@ -3,12 +3,7 @@
 using namespace std;
 
 int main(int args, char** argz){
-    Point point(10, 20, "type", "subtype", "name", "adress");
-    // cout << point.getLatitude() << endl;
-    // cout << point.getLongitude() << endl;
-    // cout << point.getType() << endl;
-    // cout << point.getSubtype() << endl;
-    // cout << point.getName() << endl;
-    // cout << point.getAdress() << endl;
+    Point point(34.159, 50.2354, "type", "subtype", "name", "adress");
     point.print();
+    // cout << fixed << point.x << ", " << fixed << point.y << endl;
 }

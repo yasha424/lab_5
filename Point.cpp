@@ -1,7 +1,7 @@
 #include "Point.hpp"
-Point::Point(double Latitude, double Longitude, std::string Type, std::string SubType, std::string Name, std::string Adress){
-    latitude = Latitude;
+Point::Point(double Longitude, double Latitude, std::string Type, std::string SubType, std::string Name, std::string Adress){
     longitude = Longitude;
+    latitude = Latitude;
     type = Type;
     subtype = SubType;
     name = Name;
