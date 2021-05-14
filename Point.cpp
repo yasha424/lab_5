@@ -1,5 +1,5 @@
 #include "Point.hpp"
-Point::Point(double Longitude, double Latitude, std::string Type, std::string SubType, std::string Name, std::string Adress){
+Point::Point(double Longitude, double Latitude, string Type, string SubType, string Name, string Adress){
     longitude = Longitude;
     latitude = Latitude;
     type = Type;
@@ -9,6 +9,10 @@ Point::Point(double Longitude, double Latitude, std::string Type, std::string Su
 }
 
 void Point::print(){
-    std::cout << "Широта: " << latitude << ", Довгота: " << longitude << std::endl << "Тип: "
-              << type << ", Підтип: " << subtype << "\nНазва: " << name << ", Адреса: " << adress << std::endl;
+    cout << "Широта: " << latitude << ", Довгота: " << longitude << endl << "Тип: "
+              << type << ", Підтип: " << subtype << "\nНазва: " << name << ", Адреса: " << adress << endl;
+}
+
+void Point::make_point(string str){
+    
 }
