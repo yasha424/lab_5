@@ -12,10 +12,4 @@ public:
         name = _name;
         address = _address;
     }
-    double getX() const{
-        return x;
-    }
-    double getY() const{
-        return y;
-    }
 };
