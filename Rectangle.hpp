@@ -21,6 +21,10 @@ public:
         // width = w;
         // height = h;
     }
+    bool contains(Point a){
+        return a.x< x2 && a.y<y2 && a.x>x1 &&a.y > y1; 
+    }
+
 };
 
 class RTree{
@@ -67,11 +71,22 @@ public:
         divided = true;
     }
 
-    void insert(Point point){
+    bool insert(Point point){
+        if (boundary.contains(point)) {
+            return false;
+        }
         if (points.size() < capacity) {
             points.push_back(point);
-        } else{
+        }
+        if (!divided) {
             subdivide();
         }
-    }
+
+        return (
+            northeast->insert(point) ||
+            northwest->insert(point) ||
+            southeast->insert(point) ||
+            southwest->insert(point)
+        );
+  }
 };
