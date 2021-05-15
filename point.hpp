@@ -19,20 +19,22 @@ public:
         address = _address;
     }
 
+    Point(){}
+
     void setPoint(string s){
         while(s.find(',') != -1)
             s[s.find(',')] = '.';
-        double x = stof(s.substr(0, s.find(';')));
+        x = stof(s.substr(0, s.find(';')));
         s = s.substr(s.find(';') + 1);
-        double y = stof(s.substr(0, s.find(';')));
+        y = stof(s.substr(0, s.find(';')));
         s = s.substr(s.find(';') + 1);
-        string type = s.substr(0, s.find(';'));
+        type = s.substr(0, s.find(';'));
         s = s.substr(s.find(';') + 1);
-        string subtype = s.substr(0, s.find(';'));
+        subtype = s.substr(0, s.find(';'));
         s = s.substr(s.find(';') + 1);
-        string name = s.substr(0, s.find(';'));
+        name = s.substr(0, s.find(';'));
         s = s.substr(s.find(';') + 1);
-        string address = s.substr(0, s.find(';'));
+        address = s.substr(0, s.find(';'));
 
         // return Point(x, y, type, subtype, name, address);
     }

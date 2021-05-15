@@ -1,5 +1,4 @@
 #include "RTree.hpp"
-#include <iostream>
 
 RTree::RTree(Rectangle bound){
     boundary = bound;
@@ -69,19 +68,33 @@ void RTree::print(RTree *tree){
         cout << tree->points[i].x << ", " << tree->points[i].y << endl;
     }
     if (tree->northeast) {
-        cout << "northeast" << endl;
         print(tree->northeast);
     }
     if (tree->northwest) {
-        cout << "northwest" << endl;
         print(tree->northwest);
     }
     if (tree->southeast) {
-        cout << "southeast" << endl;
         print(tree->southeast);
     }
     if (tree->southwest) {
-        cout << "southwest" << endl;
         print(tree->southwest);
+    }
+}
+
+void RTree::makeTree(string filename){
+    ifstream infile(filename);
+    if (!infile) {
+        cout << "Sorry, unable to open the file :(\n";
+        return;
+    } else {
+        string tmp;
+        Point point;
+        int i = 0;
+        getline(infile, tmp);
+        do {
+            point.setPoint(tmp);
+            insert(point);
+            getline(infile, tmp);
+        } while (!infile.eof() && tmp != "");
     }
 }

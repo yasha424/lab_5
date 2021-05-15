@@ -1,13 +1,15 @@
 #pragma once
 
 #include <iostream>
+#include <string>
+#include <fstream>
 #include "Rectangle.hpp"
 using namespace std;
 
 class RTree{
 public:
     Rectangle boundary;
-    int capacity = 10;
+    int capacity = 16;
     RTree *northeast, *northwest, *southeast, *southwest;
     vector <Point> points;
     bool divided = false;
@@ -23,4 +25,6 @@ public:
     void print();
 
     void print(RTree *tree);
+
+    void makeTree(string filename);
 };
