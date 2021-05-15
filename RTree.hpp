@@ -4,7 +4,7 @@
 #include <string>
 #include <fstream>
 #include "Rectangle.hpp"
-#include "Point.hpp"
+// #include "Point.hpp"
 using namespace std;
 
 class RTree{
@@ -28,4 +28,12 @@ public:
     void print(RTree *tree);
 
     void makeTree(string filename);
+
+    vector<Point> findPoints(Point point, double radius);
+
+    void findPoints(RTree *tree, Point point, double radius, vector <Point> &result);
+
+    bool intersection(RTree *tree, Circle circle);
+
+    bool IsPointInCircle(Point point, Circle circle);
 };

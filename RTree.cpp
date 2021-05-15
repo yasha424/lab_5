@@ -98,3 +98,58 @@ void RTree::makeTree(string filename){
         } while (!infile.eof() && tmp != "");
     }
 }
+
+// да, да, названия придумывать я не умею....
+bool RTree::IsPointInCircle(Point point, Circle circle){
+    return (sqrt((point.x - circle.x) * (point.x - circle.x) + (point.y - circle.y) * (point.y - circle.y))) <= circle.radius;
+}
+
+bool RTree::intersection(RTree *tree, Circle circle){
+    return (((tree->boundary.x1 - circle.x) * (tree->boundary.x1 - circle.x)) + ((tree->boundary.y1 - circle.y) * (tree->boundary.y1 - circle.y))) <= circle.radius ||
+           (((tree->boundary.x2 - circle.x) * (tree->boundary.x2 - circle.x)) + ((tree->boundary.y2 - circle.y) * (tree->boundary.y2 - circle.y))) <= circle.radius;
+}
+
+void RTree::findPoints(RTree *tree, Point point, double radius, vector <Point> &result){
+    Circle circle(point, radius);
+    for (size_t i = 0; i < points.size(); i++) {
+        if (IsPointInCircle(points[i], circle)) {
+            result.push_back(points[i]);
+        }
+    }
+    if (intersection(northeast, circle)) {
+        findPoints(tree->northeast, point, radius, result);
+    }
+    if (intersection(northwest, circle)) {
+        findPoints(tree->northwest, point, radius, result);
+    }
+    if (intersection(southeast, circle)) {
+        findPoints(tree->southeast, point, radius, result);
+    }
+    if (intersection(southwest, circle)) {
+        findPoints(tree->southwest, point, radius, result);
+    }
+
+}
+
+vector<Point> RTree::findPoints(Point point, double radius){
+    vector<Point> result;
+    Circle circle(point, radius);
+    for (size_t i = 0; i < points.size(); i++) {
+        if (IsPointInCircle(points[i], circle)) {
+            result.push_back(points[i]);
+        }
+    }
+    if (intersection(northeast, circle)) {
+        findPoints(northeast, point, radius, result);
+    }
+    if (intersection(northwest, circle)) {
+        findPoints(northwest, point, radius, result);
+    }
+    if (intersection(southeast, circle)) {
+        findPoints(southeast, point, radius, result);
+    }
+    if (intersection(southwest, circle)) {
+        findPoints(southwest, point, radius, result);
+    }
+    return result;
+}

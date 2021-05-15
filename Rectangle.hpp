@@ -24,3 +24,14 @@ public:
         return (x1 <= point.x && y1 <= point.y && point.x < x2 && point.y < y2);
     }
 };
+
+class Circle{
+public:
+    double x, y, radius;
+
+    Circle(Point point, double rad){
+        x = point.x;
+        y = point.y;
+        radius = rad;
+    }
+};

@@ -17,13 +17,15 @@ public:
         subtype = _subtype;
         name = _name;
         address = _address;
+        x = 6371 * cos(latitude * 3.14159 / 180) * (longitude * 3.14159 / 180);
+        y = (latitude * 3.14159 / 180) * 6371;
     }
 
     Point(){}
 
-    Point(double lat, double long){
-        // longitude = long;
+    Point(double lat, double lon){
         latitude = lat;
+        longitude = lon;
         x = 6371 * cos(latitude * 3.14159 / 180) * (longitude * 3.14159 / 180);
         y = (latitude * 3.14159 / 180) * 6371;
     }
