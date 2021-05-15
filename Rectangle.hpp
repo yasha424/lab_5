@@ -18,8 +18,10 @@ public:
         y1 = _y1;
         x2 = _x2;
         y2 = _y2;
-        // width = w;
-        // height = h;
+    }
+
+    bool contains(Point point){
+        return (x1 <= point.x && y1 <= point.y && point.x < x2 && point.y < y2);
     }
 };
 
@@ -67,11 +69,11 @@ public:
         divided = true;
     }
 
-    void insert(Point point){
-        if (points.size() < capacity) {
-            points.push_back(point);
-        } else{
-            subdivide();
+    void insert(Point point){  // эту функцию надо дописать
+        if (boundary.contains(point)) {
+            if (points.size() < capacity) {
+                points.push_back(point);
+            }
         }
     }
 };
