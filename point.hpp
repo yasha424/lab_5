@@ -1,5 +1,6 @@
-#inlcude "iostream"
-
+#include <string>
+using namespace std;
+#pragma once
 class Point{
 public:
     double x, y;

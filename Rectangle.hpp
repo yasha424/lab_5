@@ -1,7 +1,8 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <vector>
-#include "point.hpp"
+#include "Point.hpp"
 using namespace std;
 
 
@@ -30,21 +31,27 @@ public:
     vector <Point> points;
     bool divided = false;
 
-    RTree(Rectangle rect){
-        boundary = rect;
+    RTree(Rectangle bound){
+        boundary = bound;
         northeast = NULL;
         northwest = NULL;
         southeast = NULL;
         southwest = NULL;
     }
 
-    RTree(Rectangle bound, int n){
-        boundary = bound;
-        capacity = n;
-        northeast = NULL;
-        northwest = NULL;
-        southeast = NULL;
-        southwest = NULL;
+    RTree(RTree *tree){ // copying
+        boundary = tree->boundary;
+        if (tree->divided) {
+            northeast = tree->northeast;
+            northwest = tree->northwest;
+            southeast = tree->southeast;
+            southwest = tree->southwest;
+        } else {
+            northeast = NULL;
+            northwest = NULL;
+            southeast = NULL;
+            southwest = NULL;
+        }
     }
 
     void subdivide(){
