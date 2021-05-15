@@ -1,3 +1,5 @@
+#inlcude "iostream"
+
 class Point{
 public:
     double x, y;
