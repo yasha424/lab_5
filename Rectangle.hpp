@@ -18,8 +18,10 @@ public:
         y1 = _y1;
         x2 = _x2;
         y2 = _y2;
-        // width = w;
-        // height = h;
+    }
+
+    bool contains(Point point){
+        return (x1 <= point.x && y1 <= point.y && point.x < x2 && point.y < y2);
     }
     bool contains(Point a){
         return a.x< x2 && a.y<y2 && a.x>x1 &&a.y > y1; 
@@ -70,7 +72,7 @@ public:
 
         divided = true;
     }
-
+    
     bool insert(Point point){
         if (boundary.contains(point)) {
             return false;
