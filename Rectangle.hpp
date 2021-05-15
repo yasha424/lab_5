@@ -23,9 +23,9 @@ public:
     bool contains(Point point){
         return (x1 <= point.x && y1 <= point.y && point.x < x2 && point.y < y2);
     }
-    bool contains(Point a){
-        return a.x< x2 && a.y<y2 && a.x>x1 &&a.y > y1; 
-    }
+    // bool contains(Point a){
+    //     return a.x< x2 && a.y<y2 && a.x>x1 &&a.y > y1;
+    // }
 
 };
 
@@ -72,13 +72,14 @@ public:
 
         divided = true;
     }
-    
+
     bool insert(Point point){
-        if (boundary.contains(point)) {
+        if (!boundary.contains(point)) {
             return false;
         }
         if (points.size() < capacity) {
             points.push_back(point);
+            return true;
         }
         if (!divided) {
             subdivide();
