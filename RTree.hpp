@@ -10,10 +10,11 @@ using namespace std;
 class RTree{
 public:
     Rectangle boundary;
-    int capacity = 16;
+    int capacity = 100000;
     RTree *northeast, *northwest, *southeast, *southwest;
     vector <Point> points;
     bool divided = false;
+
 
     RTree(Rectangle bound);
 
@@ -21,11 +22,13 @@ public:
 
     void subdivide();
 
-    bool insert(Point point);
+    // bool insert(Point point);
+
+    void insert(Point point);
 
     void print();
 
-    void print(RTree *tree);
+    void print(RTree *tree, int &n);
 
     void makeTree(string filename);
 

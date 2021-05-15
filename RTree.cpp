@@ -36,48 +36,90 @@ void RTree::subdivide(){
     divided = true;
 }
 
-bool RTree::insert(Point point){
+void RTree::insert(Point point){
     if (!boundary.contains(point)) {
-        return false;
+        return;
     }
     if (points.size() < capacity) {
         points.push_back(point);
-        return true;
+        // cout << "pushed\n";
+        return;
     }
     if (!divided) {
         subdivide();
     }
-
-    return (
-        northeast->insert(point) ||
-        northwest->insert(point) ||
-        southeast->insert(point) ||
-        southwest->insert(point)
-    );
+    if (northeast->boundary.contains(point)) {
+        northeast->insert(point);
+        return;
+    }
+    if (northwest->boundary.contains(point)) {
+        northwest->insert(point);
+        return;
+    }
+    if (southeast->boundary.contains(point)) {
+        southeast->insert(point);
+        return;
+    }
+    if (southwest->boundary.contains(point)) {
+        southwest->insert(point);
+        return;
+    }
 }
+
+// bool RTree::insert(Point point){
+//     if (!boundary.contains(point)) {
+//         return false;
+//     }
+//     if (points.size() < capacity) {
+//         points.push_back(point);
+//         return true;
+//     }
+//     if (!divided) {
+//         subdivide();
+//     }
+//
+//     return (
+//         northeast->insert(point) ||
+//         northwest->insert(point) ||
+//         southeast->insert(point) ||
+//         southwest->insert(point)
+//     );
+// }
 
 void RTree::print(){
-    print(northeast);
-    print(northwest);
-    print(southeast);
-    print(southwest);
+    int n = 0;
+    for (size_t i = 0; i < points.size(); i++) {
+        cout << points[i].latitude << ", " << points[i].longitude << endl; n++;
+    }
+    if (divided) {
+        print(northeast, n);
+        print(northwest, n);
+        print(southeast, n);
+        print(southwest, n);
+    }
+    cout << n << endl;
 }
 
-void RTree::print(RTree *tree){
+void RTree::print(RTree *tree, int &n){
     for (size_t i = 0; i < tree->points.size(); i++) {
-        cout << tree->points[i].x << ", " << tree->points[i].y << endl;
+        cout << tree->points[i].latitude << ", " << tree->points[i].longitude << endl;
+        n++;
     }
     if (tree->northeast) {
-        print(tree->northeast);
+        cout << "northeast" << endl;
+        print(tree->northeast, n);
     }
     if (tree->northwest) {
-        print(tree->northwest);
+        cout << "northwest" << endl;
+        print(tree->northwest, n);
     }
     if (tree->southeast) {
-        print(tree->southeast);
+        cout << "southeast" << endl;
+        print(tree->southeast, n);
     }
     if (tree->southwest) {
-        print(tree->southwest);
+        cout << "southwest" << endl;
+        print(tree->southwest, n);
     }
 }
 
@@ -96,6 +138,13 @@ void RTree::makeTree(string filename){
             insert(point);
             getline(infile, tmp);
         } while (!infile.eof() && tmp != "");
+
+        // for (size_t i = 0; i < 18; i++) {
+        //     getline(infile, tmp);
+        //     point.setPoint(tmp);
+        //     insert(point);
+        //     cout << tmp << endl;
+        // }
     }
 }
 
