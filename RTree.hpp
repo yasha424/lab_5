@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include "Rectangle.hpp"
+#include "Point.hpp"
 using namespace std;
 
 class RTree{
