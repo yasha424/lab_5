@@ -32,11 +32,13 @@ public:
 
     bool makeTree(string filename);
 
-    vector<Point> findPoints(Point point, double radius);
+    void findPoints(Point point, double radius, vector <Point> &result);
 
-    void findPoints(RTree *tree, Point point, double radius, vector <Point> &result);
+    // void findPoints(RTree *tree, Point point, double radius, vector <Point> &result);
 
-    bool intersection(RTree *tree, Circle circle);
+    bool intersection(Rectangle boundary, Circle circle);
 
-    bool IsPointInCircle(Point point, Circle circle);
+    bool IsPointInCircle(double x, double y, Circle circle);
+
+    bool IsPointInRectangle(double x, double y, Rectangle boundary);
 };

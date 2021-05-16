@@ -17,8 +17,8 @@ public:
         subtype = _subtype;
         name = _name;
         address = _address;
-        x = 6371 * cos(latitude * 3.14159 / 180) * (longitude * 3.14159 / 180);
-        y = (latitude * 3.14159 / 180) * 6371;
+        x = 111.321 * longitude * cos(latitude * M_PI / 180);
+        y = 111.135 * latitude;
     }
 
     Point(){}
@@ -26,8 +26,8 @@ public:
     Point(double lat, double lon){
         latitude = lat;
         longitude = lon;
-        x = 6371 * cos(latitude * 3.14159 / 180) * (longitude * 3.14159 / 180);
-        y = (latitude * 3.14159 / 180) * 6371;
+        x = 111.321 * longitude * cos(latitude * M_PI / 180);
+        y = 111.135 * latitude;
     }
 
     void setPoint(string s){
@@ -45,8 +45,8 @@ public:
         s = s.substr(s.find(';') + 1);
         address = s.substr(0, s.find(';'));
 
-        x = 6371 * cos(latitude * 3.14159 / 180) * (longitude * 3.14159 / 180);
-        y = (latitude * 3.14159 / 180) * 6371;
+        x = 111.321 * longitude * cos(latitude * M_PI / 180);
+        y = 111.135 * latitude;
 
         // return Point(x, y, type, subtype, name, address);
     }

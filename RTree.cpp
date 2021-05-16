@@ -24,13 +24,13 @@ RTree::RTree(RTree *tree){ // copying
 }
 
 void RTree::subdivide(){
-    Rectangle ne((boundary.x2 + boundary.x1) / 2, (boundary.y2 + boundary.y1) / 2, boundary.x2, boundary.y2);
+    Rectangle ne((boundary.lat2 + boundary.lat1) / 2, (boundary.long2 + boundary.long1) / 2, boundary.lat2, boundary.long2);
     northeast = new RTree(ne);
-    Rectangle nw(boundary.x1, (boundary.y2 + boundary.y1) / 2, (boundary.x2 + boundary.x1) / 2, boundary.y2);
+    Rectangle nw(boundary.lat1, (boundary.long2 + boundary.long1) / 2, (boundary.lat2 + boundary.lat1) / 2, boundary.long2);
     northwest = new RTree(nw);
-    Rectangle se((boundary.x2 + boundary.x1) / 2, boundary.y1, boundary.x2, (boundary.y2 + boundary.y1) / 2);
+    Rectangle se((boundary.lat2 + boundary.lat1) / 2, boundary.long1, boundary.lat2, (boundary.long2 + boundary.long1) / 2);
     southeast = new RTree(se);
-    Rectangle sw(boundary.x1, boundary.y1, (boundary.x2 + boundary.x1) / 2, (boundary.y1 + boundary.y2) / 2);
+    Rectangle sw(boundary.lat1, boundary.long1, (boundary.lat2 + boundary.lat1) / 2, (boundary.long1 + boundary.long2) / 2);
     southwest = new RTree(sw);
 
     divided = true;
@@ -149,56 +149,64 @@ bool RTree::makeTree(string filename){
     return true;
 }
 
-bool RTree::IsPointInCircle(Point point, Circle circle){
-    return (sqrt((point.x - circle.x) * (point.x - circle.x) + (point.y - circle.y) * (point.y - circle.y))) <= circle.radius;
+bool RTree::IsPointInCircle(double x, double y, Circle circle){
+    return (sqrt((x - circle.x) * (x - circle.x) + (y - circle.y) *
+           (y - circle.y)) <= circle.radius);
 }
 
-bool RTree::intersection(RTree *tree, Circle circle){
-    return (((tree->boundary.X1 - circle.x) * (tree->boundary.X1 - circle.x)) + ((tree->boundary.Y1 - circle.y) * (tree->boundary.Y1 - circle.y))) <= circle.radius ||
-           (((tree->boundary.X2 - circle.x) * (tree->boundary.X2 - circle.x)) + ((tree->boundary.Y2 - circle.y) * (tree->boundary.Y2 - circle.y))) <= circle.radius;
+// bool RTree::IsPointInRectangle(double x, double y, Rectangle boundary){
+//     if (boundary.X1 < x && boundary.Y1 < y && boundary.X2 > x && boundary.Y2 > y) {
+//         return true;
+//     }
+//     return false;
+// }
+
+
+bool RTree::intersection(Rectangle boundary, Circle circle){
+
 }
 
-void RTree::findPoints(RTree *tree, Point point, double radius, vector <Point> &result){
+// void RTree::findPoints(RTree *tree, Point point, double radius, vector <Point> &result){
+//     Circle circle(point, radius);
+//     for (size_t i = 0; i < points.size(); i++) {
+//         if (IsPointInCircle(points[i].x, points[i].y, circle)) {
+//             result.push_back(points[i]);
+//         }
+//     }
+//     if (intersection(northeast, circle)) {
+//         findPoints(tree->northeast, point, radius, result);
+//     }
+//     if (intersection(northwest, circle)) {
+//         findPoints(tree->northwest, point, radius, result);
+//     }
+//     if (intersection(southeast, circle)) {
+//         findPoints(tree->southeast, point, radius, result);
+//     }
+//     if (intersection(southwest, circle)) {
+//         findPoints(tree->southwest, point, radius, result);
+//     }
+//
+// }
+
+void RTree::findPoints(Point point, double radius, vector <Point> &result){
+    // vector<Point> result;
     Circle circle(point, radius);
     for (size_t i = 0; i < points.size(); i++) {
-        if (IsPointInCircle(points[i], circle)) {
+        if (IsPointInCircle(points[i].x, points[i].y, circle)) {
             result.push_back(points[i]);
         }
     }
-    if (intersection(northeast, circle)) {
-        findPoints(tree->northeast, point, radius, result);
+    if (intersection(northeast->boundary, circle)) {
+        northeast->findPoints(point, radius, result);
     }
-    if (intersection(northwest, circle)) {
-        findPoints(tree->northwest, point, radius, result);
+    if (intersection(northwest->boundary, circle)) {
+        northwest->findPoints(point, radius, result);
     }
-    if (intersection(southeast, circle)) {
-        findPoints(tree->southeast, point, radius, result);
+    if (intersection(southeast->boundary, circle)) {
+        southeast->findPoints(point, radius, result);
     }
-    if (intersection(southwest, circle)) {
-        findPoints(tree->southwest, point, radius, result);
+    if (intersection(southwest->boundary, circle)) {
+        southwest->findPoints(point, radius, result);
     }
-
-}
-
-vector<Point> RTree::findPoints(Point point, double radius){
-    vector<Point> result;
-    Circle circle(point, radius);
-    for (size_t i = 0; i < points.size(); i++) {
-        if (IsPointInCircle(points[i], circle)) {
-            result.push_back(points[i]);
-        }
-    }
-    if (intersection(northeast, circle)) {
-        findPoints(northeast, point, radius, result);
-    }
-    if (intersection(northwest, circle)) {
-        findPoints(northwest, point, radius, result);
-    }
-    if (intersection(southeast, circle)) {
-        findPoints(southeast, point, radius, result);
-    }
-    if (intersection(southwest, circle)) {
-        findPoints(southwest, point, radius, result);
-    }
-    return result;
+    // return result;
 }
