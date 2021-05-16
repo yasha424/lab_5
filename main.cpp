@@ -19,15 +19,16 @@ int main(int argc, char const *argv[]) {
         double radius = stod(argv[4]);
 
         start = clock();
-        // vector <Point> result = tree.findPoints(point, radius);
+        vector <Point> result;
+        tree.findPoints(point, radius, result);
         double finding_time = clock() - start;
 
-        // for (size_t i = 0; i < result.size(); i++) {
-        //     cout << result[i].latitude << ", " << result[i].longitude << ", " << result[i].subtype <<
-        //          ", " << result[i].name << ", " << result[i].address << endl;
-        // }
-        // cout << "Build time is: " << build_time / 1000000 << endl;
-        // cout << "Finding time is: " << finding_time / 1000000 << endl;
-        tree.print();
+        for (size_t i = 0; i < result.size(); i++) {
+            cout << result[i].latitude << ", " << result[i].longitude << ", " << result[i].type <<
+                ", " << result[i].subtype << ", " << result[i].name << ", " << result[i].address << endl;
+        }
+        cout << "Build time is: " << build_time / 1000000 << endl;
+        cout << "Finding time is: " << finding_time / 1000000 << endl;
+        // tree.print();
     }
 }

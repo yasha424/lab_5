@@ -10,7 +10,7 @@ using namespace std;
 class RTree{
 public:
     Rectangle boundary;
-    int capacity = 2;
+    int capacity = 4;
     RTree *northeast, *northwest, *southeast, *southwest;
     vector <Point> points;
     bool divided = false;
@@ -40,5 +40,5 @@ public:
 
     bool IsPointInCircle(double x, double y, Circle circle);
 
-    bool IsPointInRectangle(double x, double y, Rectangle boundary);
+    // bool IsPointInRectangle(double x, double y, Rectangle boundary);
 };

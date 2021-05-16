@@ -150,20 +150,30 @@ bool RTree::makeTree(string filename){
 }
 
 bool RTree::IsPointInCircle(double x, double y, Circle circle){
+    double latitude = y / 111.135,
+           longitude = x / (111.321 * cos(latitude * M_PI / 180));
+
+    x = 111.321 * longitude * cos(latitude * M_PI / 180);
+    y = 111.135 * latitude; 
+
     return (sqrt((x - circle.x) * (x - circle.x) + (y - circle.y) *
            (y - circle.y)) <= circle.radius);
 }
 
-// bool RTree::IsPointInRectangle(double x, double y, Rectangle boundary){
-//     if (boundary.X1 < x && boundary.Y1 < y && boundary.X2 > x && boundary.Y2 > y) {
-//         return true;
-//     }
-//     return false;
-// }
+bool IsPointInRectangle(double x, double y, Rectangle boundary){
+    double latitude = y / 111.135,
+           longitude = x / (111.321 * cos(latitude * M_PI / 180));
+
+    return (latitude > boundary.lat1 && longitude > boundary.long1 &&
+            latitude < boundary.lat2 && longitude < boundary.long2);
+}
 
 
 bool RTree::intersection(Rectangle boundary, Circle circle){
-
+    return (IsPointInRectangle(circle.x - circle.radius, circle.y - circle.radius, boundary) ||
+            IsPointInRectangle(circle.x + circle.radius, circle.y - circle.radius, boundary) ||
+            IsPointInRectangle(circle.x - circle.radius, circle.y + circle.radius, boundary) ||
+            IsPointInRectangle(circle.x + circle.radius, circle.y + circle.radius, boundary));
 }
 
 // void RTree::findPoints(RTree *tree, Point point, double radius, vector <Point> &result){
@@ -196,17 +206,19 @@ void RTree::findPoints(Point point, double radius, vector <Point> &result){
             result.push_back(points[i]);
         }
     }
-    if (intersection(northeast->boundary, circle)) {
-        northeast->findPoints(point, radius, result);
-    }
-    if (intersection(northwest->boundary, circle)) {
-        northwest->findPoints(point, radius, result);
-    }
-    if (intersection(southeast->boundary, circle)) {
-        southeast->findPoints(point, radius, result);
-    }
-    if (intersection(southwest->boundary, circle)) {
-        southwest->findPoints(point, radius, result);
+    if (divided) {
+        if (intersection(northeast->boundary, circle)) {
+            northeast->findPoints(point, radius, result);
+        }
+        if (intersection(northwest->boundary, circle)) {
+            northwest->findPoints(point, radius, result);
+        }
+        if (intersection(southeast->boundary, circle)) {
+            southeast->findPoints(point, radius, result);
+        }
+        if (intersection(southwest->boundary, circle)) {
+            southwest->findPoints(point, radius, result);
+        }
     }
     // return result;
 }
