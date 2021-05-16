@@ -29,6 +29,7 @@ int main(int argc, char const *argv[]) {
         }
         cout << "Build time is: " << build_time / 1000000 << endl;
         cout << "Finding time is: " << finding_time / 1000000 << endl;
+        // cout << result.size() << endl;
         // tree.print();
     }
 }

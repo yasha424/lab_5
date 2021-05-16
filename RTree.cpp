@@ -150,11 +150,11 @@ bool RTree::makeTree(string filename){
 }
 
 bool RTree::IsPointInCircle(double x, double y, Circle circle){
-    double latitude = y / 111.135,
-           longitude = x / (111.321 * cos(latitude * M_PI / 180));
-
-    x = 111.321 * longitude * cos(latitude * M_PI / 180);
-    y = 111.135 * latitude; 
+    // double latitude = y / 111.135,
+    //        longitude = x / (111.321 * cos(latitude * M_PI / 180));
+    //
+    // x = 111.321 * longitude * cos(latitude * M_PI / 180);
+    // y = 111.135 * latitude;
 
     return (sqrt((x - circle.x) * (x - circle.x) + (y - circle.y) *
            (y - circle.y)) <= circle.radius);
@@ -164,8 +164,8 @@ bool IsPointInRectangle(double x, double y, Rectangle boundary){
     double latitude = y / 111.135,
            longitude = x / (111.321 * cos(latitude * M_PI / 180));
 
-    return (latitude > boundary.lat1 && longitude > boundary.long1 &&
-            latitude < boundary.lat2 && longitude < boundary.long2);
+    return (latitude > boundary.lat1 || longitude > boundary.long1 ||
+            latitude < boundary.lat2 || longitude < boundary.long2);
 }
 
 
