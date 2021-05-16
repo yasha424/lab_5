@@ -10,7 +10,7 @@ using namespace std;
 class RTree{
 public:
     Rectangle boundary;
-    int capacity = 100000;
+    int capacity = 2;
     RTree *northeast, *northwest, *southeast, *southwest;
     vector <Point> points;
     bool divided = false;
@@ -30,7 +30,7 @@ public:
 
     void print(RTree *tree, int &n);
 
-    void makeTree(string filename);
+    bool makeTree(string filename);
 
     vector<Point> findPoints(Point point, double radius);
 

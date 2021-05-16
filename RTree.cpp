@@ -28,7 +28,7 @@ void RTree::subdivide(){
     northeast = new RTree(ne);
     Rectangle nw(boundary.x1, (boundary.y2 + boundary.y1) / 2, (boundary.x2 + boundary.x1) / 2, boundary.y2);
     northwest = new RTree(nw);
-    Rectangle se((boundary.x2 + boundary.x1) / 2, boundary.y1, boundary.x2, boundary.y2/2);
+    Rectangle se((boundary.x2 + boundary.x1) / 2, boundary.y1, boundary.x2, (boundary.y2 + boundary.y1) / 2);
     southeast = new RTree(se);
     Rectangle sw(boundary.x1, boundary.y1, (boundary.x2 + boundary.x1) / 2, (boundary.y1 + boundary.y2) / 2);
     southwest = new RTree(sw);
@@ -123,15 +123,15 @@ void RTree::print(RTree *tree, int &n){
     }
 }
 
-void RTree::makeTree(string filename){
+bool RTree::makeTree(string filename){
     ifstream infile(filename);
     if (!infile) {
         cout << "Sorry, unable to open the file :(\n";
-        return;
+        return false;
     } else {
         string tmp;
         Point point;
-        int i = 0;
+        // int i = 0;
         getline(infile, tmp);
         do {
             point.setPoint(tmp);
@@ -146,16 +146,16 @@ void RTree::makeTree(string filename){
         //     cout << tmp << endl;
         // }
     }
+    return true;
 }
 
-// да, да, названия придумывать я не умею....
 bool RTree::IsPointInCircle(Point point, Circle circle){
     return (sqrt((point.x - circle.x) * (point.x - circle.x) + (point.y - circle.y) * (point.y - circle.y))) <= circle.radius;
 }
 
 bool RTree::intersection(RTree *tree, Circle circle){
-    return (((tree->boundary.x1 - circle.x) * (tree->boundary.x1 - circle.x)) + ((tree->boundary.y1 - circle.y) * (tree->boundary.y1 - circle.y))) <= circle.radius ||
-           (((tree->boundary.x2 - circle.x) * (tree->boundary.x2 - circle.x)) + ((tree->boundary.y2 - circle.y) * (tree->boundary.y2 - circle.y))) <= circle.radius;
+    return (((tree->boundary.X1 - circle.x) * (tree->boundary.X1 - circle.x)) + ((tree->boundary.Y1 - circle.y) * (tree->boundary.Y1 - circle.y))) <= circle.radius ||
+           (((tree->boundary.X2 - circle.x) * (tree->boundary.X2 - circle.x)) + ((tree->boundary.Y2 - circle.y) * (tree->boundary.Y2 - circle.y))) <= circle.radius;
 }
 
 void RTree::findPoints(RTree *tree, Point point, double radius, vector <Point> &result){
