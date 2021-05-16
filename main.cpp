@@ -2,6 +2,7 @@
 #include <ctime>
 using namespace std;
 
+void printPlaces(vector <Point> points);
 
 int main(int argc, char const *argv[]) {
     if (argc != 5) {
@@ -23,13 +24,23 @@ int main(int argc, char const *argv[]) {
         tree.findPoints(point, radius, result);
         double finding_time = clock() - start;
 
-        for (size_t i = 0; i < result.size(); i++) {
-            cout << result[i].latitude << ", " << result[i].longitude << ", " << result[i].type <<
-                ", " << result[i].subtype << ", " << result[i].name << ", " << result[i].address << endl;
-        }
-        cout << "Build time is: " << build_time / 1000000 << endl;
+        cout << "Building time is: " << build_time / 1000000 << endl;
         cout << "Finding time is: " << finding_time / 1000000 << endl;
-        // cout << result.size() << endl;
-        // tree.print();
+        printPlaces(result);
+    }
+}
+
+void printPlaces(vector <Point> points){
+    cout << "\nWe found next places in this area:\n";
+    for (size_t i = 0; i < points.size(); i++) {
+        cout << i << ") " << points[i].type << ", " << points[i].subtype;
+        if (points[i].name != "") {
+            cout << ", " << points[i].name;
+        }
+        if (points[i].address != "") {
+            cout << ", " << points[i].address;
+        }
+        cout << ", with coordinates " << points[i].latitude << ", " << points[i].longitude;
+        cout << ".\n";
     }
 }

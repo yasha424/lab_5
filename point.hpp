@@ -47,8 +47,6 @@ public:
 
         x = 111.321 * longitude * cos(latitude * M_PI / 180);
         y = 111.135 * latitude;
-
-        // return Point(x, y, type, subtype, name, address);
     }
 
 };

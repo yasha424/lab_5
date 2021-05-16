@@ -15,14 +15,11 @@ public:
     vector <Point> points;
     bool divided = false;
 
-
     RTree(Rectangle bound);
 
     RTree(RTree *tree);
 
     void subdivide();
-
-    // bool insert(Point point);
 
     void insert(Point point);
 
@@ -34,11 +31,7 @@ public:
 
     void findPoints(Point point, double radius, vector <Point> &result);
 
-    // void findPoints(RTree *tree, Point point, double radius, vector <Point> &result);
-
     bool intersection(Rectangle boundary, Circle circle);
 
     bool IsPointInCircle(double x, double y, Circle circle);
-
-    // bool IsPointInRectangle(double x, double y, Rectangle boundary);
 };

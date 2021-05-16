@@ -30,12 +30,7 @@ public:
         y1 = _y1;
         x2 = _x2;
         y2 = _y2;
-        // x1 = 111.321 * long1 * cos(lat1 * M_PI / 180);
-        // y1 = 111.135 * lat1;
-        // x2 = 111.321 * long2 * cos(lat2 * M_PI / 180);
-        // y2 = 111.135 * lat2;
     }
-
 
     bool contains(Point point){
         return (lat1 <= point.latitude && long1 <= point.longitude && point.latitude < lat2 && point.longitude < long2);
