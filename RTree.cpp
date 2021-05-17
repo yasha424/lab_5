@@ -6,6 +6,7 @@ RTree::RTree(Rectangle bound){
     northwest = NULL;
     southeast = NULL;
     southwest = NULL;
+    all = false;
 }
 
 RTree::RTree(RTree *tree){ // copying
@@ -40,8 +41,22 @@ void RTree::insert(Point point){
     if (!boundary.contains(point)) {
         return;
     }
+
+    if (types.size() == 5) all = true;
+    if (types.size() < 5) {
+        bool there = false;
+        for (size_t i = 0; i < types.size(); i++) {
+            if (types[i] == point.type) {
+                there = true;
+                break;
+            }
+        }
+        if (!there) types.push_back(point.type);
+    }
+
     if (points.size() < capacity) {
         points.push_back(point);
+
         // cout << "pushed\n";
         return;
     }
@@ -142,25 +157,46 @@ bool RTree::intersection(Rectangle boundary, Circle circle){
             IsPointInRectangle(circle.x + circle.radius, circle.y + circle.radius, boundary));
 }
 
-void RTree::findPoints(Point point, double radius, vector <Point> &result){
+void RTree::findPoints(Point point, double radius, vector <Point> &result, string search_type){
     Circle circle(point, radius);
     for (size_t i = 0; i < points.size(); i++) {
-        if (IsPointInCircle(points[i].x, points[i].y, circle)) {
+        if (IsPointInCircle(points[i].x, points[i].y, circle) && search_type == points[i].type) {
             result.push_back(points[i]);
         }
     }
     if (divided) {
-        if (intersection(northeast->boundary, circle)) {
-            northeast->findPoints(point, radius, result);
+        if (intersection(northeast->boundary, circle) && northeast->types.size() == 5) {
+            northeast->findPoints(point, radius, result, search_type);
+        } else if (intersection(northeast->boundary, circle) && northeast->containsType(search_type)){
+            northeast->findPoints(point, radius, result, search_type);
         }
-        if (intersection(northwest->boundary, circle)) {
-            northwest->findPoints(point, radius, result);
+
+        if (intersection(northwest->boundary, circle) && northwest->types.size() == 5) {
+            northwest->findPoints(point, radius, result, search_type);
+        } else if (intersection(northwest->boundary, circle) && northwest->containsType(search_type)){
+            northwest->findPoints(point, radius, result, search_type);
         }
-        if (intersection(southeast->boundary, circle)) {
-            southeast->findPoints(point, radius, result);
+
+        if (intersection(southeast->boundary, circle) && southeast->types.size() == 5) {
+            southeast->findPoints(point, radius, result, search_type);
+        } else if (intersection(southeast->boundary, circle) && southeast->containsType(search_type)){
+            southeast->findPoints(point, radius, result, search_type);
         }
-        if (intersection(southwest->boundary, circle)) {
-            southwest->findPoints(point, radius, result);
+
+        if (intersection(southwest->boundary, circle) && southwest->types.size() == 5) {
+            southwest->findPoints(point, radius, result, search_type);
+        } else if (intersection(southwest->boundary, circle) && southwest->containsType(search_type)){
+            southwest->findPoints(point, radius, result, search_type);
+        }
+
+    }
+}
+
+bool RTree::containsType(string search_type){
+    for (size_t i = 0; i < types.size(); i++) {
+        if (types[i] == search_type) {
+            return true;
         }
     }
+    return false;
 }
