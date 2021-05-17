@@ -123,7 +123,7 @@ bool RTree::makeTree(string filename){
 
 bool RTree::IsPointInCircle(double x, double y, Circle circle){
     return (sqrt((x - circle.x) * (x - circle.x) + (y - circle.y) *
-           (y - circle.y)) <= circle.radius);
+           (y - circle.y)) < circle.radius);
 }
 
 bool IsPointInRectangle(double x, double y, Rectangle boundary){

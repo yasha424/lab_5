@@ -33,7 +33,7 @@ int main(int argc, char const *argv[]) {
 void printPlaces(vector <Point> points){
     cout << "\nWe found next places in this area:\n";
     for (size_t i = 0; i < points.size(); i++) {
-        cout << i << ") " << points[i].type << ", " << points[i].subtype;
+        cout << i + 1 << ") " << points[i].type << ", " << points[i].subtype;
         if (points[i].name != "") {
             cout << ", " << points[i].name;
         }
