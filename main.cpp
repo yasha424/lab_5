@@ -9,7 +9,7 @@ int main(int argc, char const *argv[]) {
         cout << "There should be 5 arguments!\n";
         return 0;
     }
-    Rectangle rec(0, 0, 90, 90);
+    Rectangle rec(0, 0, 90, 180);
     RTree tree(rec);
 
     double start = clock();
