@@ -5,13 +5,14 @@ using namespace std;
 void printPlaces(vector <Point> points);
 
 int main(int argc, char const *argv[]) {
-    if (argc != 5) {
-        cout << "There should be 5 arguments!\n";
+    if (argc != 6) {
+        cout << "There should be 6 arguments!\n";
         return 0;
     }
+    argv[1]="D:\\lab5\\cmake-build-debug\\CMakeFiles\\ukraine_poi.csv";
     Rectangle rec(0, 0, 90, 180);
     RTree tree(rec);
-
+    string type = argv[5];
     double start = clock();
     if (tree.makeTree(argv[1])){
         double build_time = clock() - start;
@@ -21,7 +22,7 @@ int main(int argc, char const *argv[]) {
 
         start = clock();
         vector <Point> result;
-        tree.findPoints(point, radius, result);
+        tree.findPoints(point, radius, result,type);
         double finding_time = clock() - start;
 
         cout << "Building time is: " << build_time / 1000000 << endl;
